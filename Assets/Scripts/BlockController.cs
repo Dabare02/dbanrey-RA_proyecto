@@ -4,7 +4,7 @@ public class BlockController : MonoBehaviour
 {
     [Header("Configuración de movimiento")]
     public float fallSpeed = 0.5f;  // Velocidad caida lenta controlada
-    public float moveDistance = 0.2f;   // Cuando se mueve hacia los lados en cada pulsacion de boton
+    public float moveDistance = 1.0f;   // Cuando se mueve hacia los lados en cada pulsacion de boton
 
     private Rigidbody _rb;
     private bool isFalling = true;
