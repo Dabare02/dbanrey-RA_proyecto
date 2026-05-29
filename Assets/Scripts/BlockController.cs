@@ -62,9 +62,9 @@ public class BlockController : MonoBehaviour
     }
 
     // --- DETECCION ATERRIZAJE ---
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (isFalling && (collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("Landed")))
+        if (isFalling && (other.gameObject.CompareTag("Floor") || other.gameObject.CompareTag("Landed")))
         {
             LandBlock();
         }
