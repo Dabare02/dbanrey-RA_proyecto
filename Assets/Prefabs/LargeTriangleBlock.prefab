@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 7391449776980135996}
   - component: {fileID: 7456735357545845576}
   - component: {fileID: 2438211628854258680}
-  - component: {fileID: 6016283895938411687}
-  - component: {fileID: 432479959378126390}
+  - component: {fileID: 6743438781523724404}
+  - component: {fileID: 4867803594845752501}
   - component: {fileID: 1849723819953702495}
   - component: {fileID: 4917230617656924101}
   m_Layer: 0
@@ -32,8 +32,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -90,8 +90,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6016283895938411687
-BoxCollider:
+--- !u!64 &6743438781523724404
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -108,11 +108,12 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.19771865, y: 0.097827286, z: 0.10043595}
-  m_Center: {x: -0.0015849099, y: -0.0011089649, z: 0}
---- !u!65 &432479959378126390
-BoxCollider:
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: d7033beace962d54bbbd3c23912913ce, type: 3}
+--- !u!64 &4867803594845752501
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -129,9 +130,10 @@ BoxCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.20167308, y: 0.09978384, z: 0.10244462}
-  m_Center: {x: -0.0015849099, y: -0.0011089649, z: 0}
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: d7033beace962d54bbbd3c23912913ce, type: 3}
 --- !u!54 &1849723819953702495
 Rigidbody:
   m_ObjectHideFlags: 0
