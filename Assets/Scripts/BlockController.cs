@@ -9,6 +9,11 @@ public class BlockController : MonoBehaviour
     private Rigidbody _rb;
     private bool isFalling = true;
 
+    public bool IsFalling
+    {
+        get { return isFalling; }
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -53,13 +58,13 @@ public class BlockController : MonoBehaviour
     public void RotateBlock()
     {
         if (!isFalling) return;
-        transform.Rotate(0, 90, 0);
+        transform.Rotate(0, 45, 0);
     }
 
     // --- DETECCION ATERRIZAJE ---
     private void OnCollisionEnter(Collision collision)
     {
-        if (isFalling && (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Landed")))
+        if (isFalling && (collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("Landed")))
         {
             LandBlock();
         }

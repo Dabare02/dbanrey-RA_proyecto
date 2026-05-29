@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6292085733505163946}
   m_Layer: 0
   m_Name: TestBlock
-  m_TagString: Untagged
+  m_TagString: Landed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -150,4 +150,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed: 0.5
-  moveDistance: 0.2
+  moveDistance: 1

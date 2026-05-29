@@ -9,7 +9,7 @@ public class SpawnerManager : MonoBehaviour
 
     public void SpawnBlock()
     {
-        if (currentBlock == null || !currentBlock.enabled)
+        if (currentBlock == null || !currentBlock.IsFalling)
         {
             GameObject newBlock = Instantiate(blockPrefab, spawnPoint.position, Quaternion.identity);
             currentBlock = newBlock.GetComponent<BlockController>();
