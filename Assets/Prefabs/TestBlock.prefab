@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1058923375593708553}
   - component: {fileID: 8103379427442232183}
   - component: {fileID: 4765475041233382548}
+  - component: {fileID: 6292085733505163946}
   m_Layer: 0
   m_Name: TestBlock
   m_TagString: Untagged
@@ -136,3 +137,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &6292085733505163946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7630480439463822047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63bfd7722331b0b4bbee8368697d9945, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fallSpeed: 0.5
+  moveDistance: 0.2
