@@ -3,16 +3,23 @@ using UnityEngine;
 public class BlockController : MonoBehaviour
 {
     [Header("Configuración de movimiento")]
-    public float fallSpeed = 0.5f;  // Velocidad caida lenta controlada
-    public float moveDistance = 1.0f;   // Cuando se mueve hacia los lados en cada pulsacion de boton
+    public float defaultFallSpeed = 0.5f;  // Velocidad caida lenta controlada
+    public float dropFallSpeed = 2.0f;  // Velocidad de caida durante "drop down"
+    public float moveDistance = 2.0f;   // Cuando se mueve hacia los lados en cada pulsacion de boton
     public float rotateDegrees = 22.5f;
 
     private Rigidbody _rb;
     private bool isFalling = true;
+    private bool isControllable = true;
+    private float currentFallSpeed;
 
     public bool IsFalling
     {
         get { return isFalling; }
+    }
+    public bool IsControllable
+    {
+        get { return isControllable; }
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -23,6 +30,8 @@ public class BlockController : MonoBehaviour
         _rb.useGravity = false;
         // Colisiones continuas para que no atraviese el suelo
         _rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+
+        currentFallSpeed = defaultFallSpeed;
     }
 
     // Update is called once per frame
@@ -31,40 +40,46 @@ public class BlockController : MonoBehaviour
         if (isFalling)
         {
             // Movimiento hacia abajo
-            transform.Translate(Vector3.down * fallSpeed * Time.deltaTime, Space.World);
+            transform.Translate(Vector3.down * currentFallSpeed * Time.deltaTime, Space.World);
         }
     }
 
     // --- FUNCIONES DE CONTROL ---
     public void MoveLeft()
     {
-        if (!isFalling) return;
+        if (!isFalling || !isControllable) return;
         transform.Translate(Vector3.left * moveDistance * Time.deltaTime, Space.World);
     }
     public void MoveRight()
     {
-        if (!isFalling) return;
+        if (!isFalling || !isControllable) return;
         transform.Translate(Vector3.right * moveDistance * Time.deltaTime, Space.World);
     }
     public void MoveForward()
     {
-        if (!isFalling) return;
+        if (!isFalling || !isControllable) return;
         transform.Translate(Vector3.forward * moveDistance * Time.deltaTime, Space.World);
     }
     public void MoveBackward()
     {
-        if (!isFalling) return;
+        if (!isFalling || !isControllable) return;
         transform.Translate(Vector3.back * moveDistance * Time.deltaTime, Space.World);
     }
     public void RotateBlockLeft()
     {
-        if (!isFalling) return;
+        if (!isFalling || !isControllable) return;
         transform.Rotate(0, -rotateDegrees, 0);
     }
     public void RotateBlockRight()
     {
-        if (!isFalling) return;
+        if (!isFalling || !isControllable) return;
         transform.Rotate(0, rotateDegrees, 0);
+    }
+    public void DropDown()
+    {
+        if (!isFalling || !isControllable) return;
+        isControllable = false;
+        currentFallSpeed = dropFallSpeed;
     }
 
     // --- DETECCION ATERRIZAJE ---
@@ -78,7 +93,12 @@ public class BlockController : MonoBehaviour
     private void LandBlock()
     {
         isFalling = false;
+        currentFallSpeed = defaultFallSpeed;
         gameObject.tag = "Landed";
+
+        // Frenar en seco la inercia acumulada
+        _rb.linearVelocity = Vector3.zero;
+        _rb.angularVelocity = Vector3.zero;
         _rb.useGravity = true; // Habilitar gravedad para que el bloque pueda caer normalmente
     }
 }

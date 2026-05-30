@@ -46,4 +46,8 @@ public class SpawnerManager : MonoBehaviour
     {
         if (currentBlock != null) currentBlock.RotateBlockRight();
     }
+    public void OnClickDropDown()
+    {
+        if (currentBlock != null) currentBlock.DropDown();
+    }
 }
