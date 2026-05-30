@@ -8,8 +8,16 @@ public class SpawnerManager : MonoBehaviour
 
     [Header("Controles")]
     public Joystick movementStick;
+    public GameObject normalUI; // El panel normal (joystick y generar bloques)
+    public GameObject editUI;   // El panel de edición (flechas, rotación, Done)
 
     private BlockController currentBlock;   // Bloque controlado actualmente
+
+    // Devuelve si se puede seleccionar un bloque
+    public bool CanSelectBlock()
+    {
+        return currentBlock == null || !currentBlock.IsFalling;
+    }
 
     void Update()
     {
@@ -29,14 +37,35 @@ public class SpawnerManager : MonoBehaviour
 
     public void SpawnBlock()
     {
-        // Comprobamos si podemos spawnear
-        if (currentBlock == null || !currentBlock.IsFalling)
-        {
-            // Elegimos un bloque aleatorio
-            int randIndex = Random.Range(0, blockPrefabs.Length);
+        // Elegimos un bloque aleatorio
+        int randIndex = Random.Range(0, blockPrefabs.Length);
 
-            GameObject newBlock = Instantiate(blockPrefabs[randIndex], spawnPoint.position, Quaternion.identity);
-            currentBlock = newBlock.GetComponent<BlockController>();
+        GameObject newBlock = Instantiate(blockPrefabs[randIndex], spawnPoint.position, Quaternion.identity);
+        currentBlock = newBlock.GetComponent<BlockController>();
+    }
+    // Llamado desde block al tocarlo
+    public void StartEditingBlock(BlockController blockToEdit)
+    {
+        currentBlock = blockToEdit;
+        currentBlock.EnableEditMode();
+
+        // Cambiar la interfaz
+        normalUI.SetActive(false);
+        editUI.SetActive(true);
+
+        FreezeAllLandedBlocks(true);
+    }
+    public void FreezeAllLandedBlocks(bool freeze)
+    {
+        GameObject[] landedBlocks = GameObject.FindGameObjectsWithTag("Landed");
+        foreach (GameObject block in landedBlocks)
+        {
+            // Ignoramos el bloque que se esta editando
+            if (block.GetComponent<BlockController>() != currentBlock)
+            {
+                Rigidbody rb = block.GetComponent<Rigidbody>();
+                if (rb != null) rb.isKinematic = freeze;
+            }
         }
     }
 
@@ -68,5 +97,23 @@ public class SpawnerManager : MonoBehaviour
     public void OnClickDropDown()
     {
         if (currentBlock != null) currentBlock.DropDown();
+    }
+    public void OnClickSpawnBlock()
+    {
+        if (currentBlock == null || !currentBlock.IsFalling) SpawnBlock();
+    }
+    
+    public void OnClickDoneEditing()
+    {
+        if (currentBlock != null)
+        {
+            currentBlock.DisableEditMode();
+        }
+
+        // Restaruar la interfaz
+        editUI.SetActive(false);
+        normalUI.SetActive(true);
+
+        FreezeAllLandedBlocks(false);
     }
 }
