@@ -38,8 +38,12 @@ public class SpawnerManager : MonoBehaviour
     {
         if (currentBlock != null) currentBlock.MoveBackward();
     }
-    public void OnClickRotate()
+    public void OnClickRotateLeft()
     {
-        if (currentBlock != null) currentBlock.RotateBlock();
+        if (currentBlock != null) currentBlock.RotateBlockLeft();
+    }
+    public void OnClickRotateRight()
+    {
+        if (currentBlock != null) currentBlock.RotateBlockRight();
     }
 }

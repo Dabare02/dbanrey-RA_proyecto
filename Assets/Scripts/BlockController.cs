@@ -5,6 +5,7 @@ public class BlockController : MonoBehaviour
     [Header("Configuración de movimiento")]
     public float fallSpeed = 0.5f;  // Velocidad caida lenta controlada
     public float moveDistance = 1.0f;   // Cuando se mueve hacia los lados en cada pulsacion de boton
+    public float rotateDegrees = 22.5f;
 
     private Rigidbody _rb;
     private bool isFalling = true;
@@ -55,10 +56,15 @@ public class BlockController : MonoBehaviour
         if (!isFalling) return;
         transform.Translate(Vector3.back * moveDistance * Time.deltaTime, Space.World);
     }
-    public void RotateBlock()
+    public void RotateBlockLeft()
     {
         if (!isFalling) return;
-        transform.Rotate(0, 45, 0);
+        transform.Rotate(0, -rotateDegrees, 0);
+    }
+    public void RotateBlockRight()
+    {
+        if (!isFalling) return;
+        transform.Rotate(0, rotateDegrees, 0);
     }
 
     // --- DETECCION ATERRIZAJE ---
