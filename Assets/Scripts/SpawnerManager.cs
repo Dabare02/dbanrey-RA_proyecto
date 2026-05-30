@@ -6,7 +6,26 @@ public class SpawnerManager : MonoBehaviour
     public GameObject[] blockPrefabs;  // Prefabs bloques
     public Transform spawnPoint;    // Punto spawneo bloques
 
+    [Header("Controles")]
+    public Joystick movementStick;
+
     private BlockController currentBlock;   // Bloque controlado actualmente
+
+    void Update()
+    {
+        // Si tenemos un bloque cayendo y controlable, leemos el joystick en cada frame
+        if (currentBlock != null && currentBlock.IsFalling && currentBlock.IsControllable)
+        {
+            float horizontal = movementStick.Horizontal;
+            float vertical = movementStick.Vertical;
+
+            // Si el jugador está tocando el joystick, movemos el bloque
+            if (horizontal != 0 || vertical != 0)
+            {
+                currentBlock.MoveConJoystick(horizontal, vertical);
+            }
+        }
+    }
 
     public void SpawnBlock()
     {
@@ -22,22 +41,22 @@ public class SpawnerManager : MonoBehaviour
     }
 
     // --- FUNCIONES UI ---
-    public void OnClickLeft()
-    {
-        if (currentBlock != null) currentBlock.MoveLeft();
-    }
-    public void OnClickRight()
-    {
-        if (currentBlock != null) currentBlock.MoveRight();
-    }
-    public void OnClickForward()
-    {
-        if (currentBlock != null) currentBlock.MoveForward();
-    }
-    public void OnClickBackward()
-    {
-        if (currentBlock != null) currentBlock.MoveBackward();
-    }
+    // public void OnClickLeft()
+    // {
+    //     if (currentBlock != null) currentBlock.MoveLeft();
+    // }
+    // public void OnClickRight()
+    // {
+    //     if (currentBlock != null) currentBlock.MoveRight();
+    // }
+    // public void OnClickForward()
+    // {
+    //     if (currentBlock != null) currentBlock.MoveForward();
+    // }
+    // public void OnClickBackward()
+    // {
+    //     if (currentBlock != null) currentBlock.MoveBackward();
+    // }
     public void OnClickRotateLeft()
     {
         if (currentBlock != null) currentBlock.RotateBlockLeft();

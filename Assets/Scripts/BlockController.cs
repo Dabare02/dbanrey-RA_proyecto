@@ -5,7 +5,8 @@ public class BlockController : MonoBehaviour
     [Header("Configuración de movimiento")]
     public float defaultFallSpeed = 0.5f;  // Velocidad caida lenta controlada
     public float dropFallSpeed = 2.0f;  // Velocidad de caida durante "drop down"
-    public float moveDistance = 2.0f;   // Cuando se mueve hacia los lados en cada pulsacion de boton
+    //public float moveDistance = 2.0f;
+    public float joystickMoveSpeed = 1.0f; // Velocidad de movimiento con el joystick
     public float rotateDegrees = 22.5f;
 
     private Rigidbody _rb;
@@ -45,25 +46,35 @@ public class BlockController : MonoBehaviour
     }
 
     // --- FUNCIONES DE CONTROL ---
-    public void MoveLeft()
+    // public void MoveLeft()
+    // {
+    //     if (!isFalling || !isControllable) return;
+    //     transform.Translate(Vector3.left * moveDistance * Time.deltaTime, Space.World);
+    // }
+    // public void MoveRight()
+    // {
+    //     if (!isFalling || !isControllable) return;
+    //     transform.Translate(Vector3.right * moveDistance * Time.deltaTime, Space.World);
+    // }
+    // public void MoveForward()
+    // {
+    //     if (!isFalling || !isControllable) return;
+    //     transform.Translate(Vector3.forward * moveDistance * Time.deltaTime, Space.World);
+    // }
+    // public void MoveBackward()
+    // {
+    //     if (!isFalling || !isControllable) return;
+    //     transform.Translate(Vector3.back * moveDistance * Time.deltaTime, Space.World);
+    // }
+    public void MoveConJoystick(float horizontal, float vertical)
     {
         if (!isFalling || !isControllable) return;
-        transform.Translate(Vector3.left * moveDistance * Time.deltaTime, Space.World);
-    }
-    public void MoveRight()
-    {
-        if (!isFalling || !isControllable) return;
-        transform.Translate(Vector3.right * moveDistance * Time.deltaTime, Space.World);
-    }
-    public void MoveForward()
-    {
-        if (!isFalling || !isControllable) return;
-        transform.Translate(Vector3.forward * moveDistance * Time.deltaTime, Space.World);
-    }
-    public void MoveBackward()
-    {
-        if (!isFalling || !isControllable) return;
-        transform.Translate(Vector3.back * moveDistance * Time.deltaTime, Space.World);
+        
+        // Creamos un vector de dirección basado en la inclinación del joystick
+        Vector3 direction = new Vector3(horizontal, 0, vertical);
+        
+        // Movemos el bloque de forma fluida
+        transform.Translate(direction * joystickMoveSpeed * Time.deltaTime, Space.World);
     }
     public void RotateBlockLeft()
     {
