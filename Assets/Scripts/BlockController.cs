@@ -10,8 +10,6 @@ public class BlockController : MonoBehaviour
     public float rotateDegrees = 22.5f;
 
     [Header("Edición")]
-    public Material normalMaterial;
-    public Material outlineMaterial;
     public Collider physCollider;
 
     private Rigidbody _rb;
@@ -19,6 +17,8 @@ public class BlockController : MonoBehaviour
     private bool isFalling = true;
     private bool isControllable = true;
     private float currentFallSpeed;
+
+    private Collider floorCollider;
 
     public bool IsFalling
     {
@@ -41,6 +41,12 @@ public class BlockController : MonoBehaviour
         _renderer = GetComponent<MeshRenderer>();
 
         currentFallSpeed = defaultFallSpeed;
+        
+        GameObject floor = GameObject.FindGameObjectWithTag("Floor");
+        if (floor != null)
+        {
+            floorCollider = floor.GetComponent<Collider>();
+        }
     }
 
     // Update is called once per frame
@@ -98,7 +104,25 @@ public class BlockController : MonoBehaviour
     public void EditMoveForward() { if (isControllable) transform.Translate(Vector3.forward * moveDistance * Time.deltaTime, Space.World); }
     public void EditMoveBackward() { if (isControllable) transform.Translate(Vector3.back * moveDistance * Time.deltaTime, Space.World); }
     public void EditMoveUp() { if (isControllable) transform.Translate(Vector3.up * moveDistance * Time.deltaTime, Space.World); }
-    public void EditMoveDown() { if (isControllable) transform.Translate(Vector3.down * moveDistance * Time.deltaTime, Space.World); }
+    public void EditMoveDown() {
+        if (isControllable)
+        {
+            Vector3 downMovement = Vector3.down * moveDistance * Time.deltaTime;
+            transform.Translate(downMovement, Space.World);
+
+            if (floorCollider != null && physCollider != null)
+            {
+                float lowestBlockPoint = physCollider.bounds.min.y;
+                float floorSurface = floorCollider.bounds.max.y;
+
+                if (lowestBlockPoint < floorSurface)
+                {
+                    float penetrationDepth = floorSurface - lowestBlockPoint;
+                    transform.position -= downMovement;
+                }
+            }
+        }
+    }
     public void EditRotateYLeft() { if (isControllable) transform.Rotate(0, -rotateDegrees, 0); }
     public void EditRotateYRight() { if (isControllable) transform.Rotate(0, rotateDegrees, 0); }
     public void EditRotateXLeft() { if (isControllable) transform.Rotate(-rotateDegrees, 0, 0); }
@@ -110,20 +134,20 @@ public class BlockController : MonoBehaviour
     public void EnableEditMode()
     {
         isControllable = true;
-        _renderer.material = outlineMaterial;   // Outline azul
+        GetComponent<Outline>().enabled = true;
 
         // Congelamos sus físicas y desactivamos colisiones.
         _rb.isKinematic = true;
-        physCollider.isTrigger = true;
+        //physCollider.isTrigger = true;
     }
     public void DisableEditMode()
     {
         isControllable = false;
-        _renderer.material = normalMaterial;
+        GetComponent<Outline>().enabled = false;
 
         // Descongelar y devolver colisiones
         _rb.isKinematic = false;
-        physCollider.isTrigger = false;
+        //physCollider.isTrigger = false;
     }
 
     // --- EVENTOS ---

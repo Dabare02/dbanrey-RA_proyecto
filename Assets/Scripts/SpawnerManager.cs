@@ -3,7 +3,7 @@ using UnityEngine;
 public class SpawnerManager : MonoBehaviour
 {
     //TODO: Funciones pasua/continuar para cuando se desenfoque el image target
-    //TODO: Añadir drop shadow a bloques
+    //TODO: Arreglar bug de spawneo infinito
 
     [Header("Generación")]
     public GameObject[] blockPrefabs;  // Prefabs bloques
@@ -15,10 +15,13 @@ public class SpawnerManager : MonoBehaviour
     public GameObject editUI;   // El panel de edición (flechas, rotación, Done)
 
     private BlockController currentBlock;   // Bloque controlado actualmente
+    private bool isEditing = false;   // Indica si estamos en modo edición
 
     // Devuelve si se puede seleccionar un bloque
     public bool CanSelectBlock()
     {
+        if (isEditing) return false;
+
         return currentBlock == null || !currentBlock.IsFalling;
     }
 
@@ -43,13 +46,14 @@ public class SpawnerManager : MonoBehaviour
         // Elegimos un bloque aleatorio
         int randIndex = Random.Range(0, blockPrefabs.Length);
 
-
         GameObject newBlock = Instantiate(blockPrefabs[randIndex], spawnPoint.position, Quaternion.identity, transform);
         currentBlock = newBlock.GetComponent<BlockController>();
     }
     // Llamado desde block al tocarlo
     public void StartEditingBlock(BlockController blockToEdit)
     {
+        isEditing = true;
+
         currentBlock = blockToEdit;
         currentBlock.EnableEditMode();
 
@@ -92,11 +96,13 @@ public class SpawnerManager : MonoBehaviour
     }
     public void OnClickRotateLeft()
     {
-        if (currentBlock != null) currentBlock.RotateBlockLeft();
+        if (currentBlock != null && !isEditing) currentBlock.RotateBlockLeft();
+        else if (isEditing) currentBlock.EditRotateYLeft();
     }
     public void OnClickRotateRight()
     {
-        if (currentBlock != null) currentBlock.RotateBlockRight();
+        if (currentBlock != null && !isEditing) currentBlock.RotateBlockRight();
+        else if (isEditing) currentBlock.EditRotateYRight();
     }
 
     public void OnClickDoneEditing()
@@ -111,6 +117,7 @@ public class SpawnerManager : MonoBehaviour
         normalUI.SetActive(true);
 
         FreezeAllLandedBlocks(false);
+        isEditing = false;
     }
     public void OnClickEditLeft()
     {
@@ -146,10 +153,10 @@ public class SpawnerManager : MonoBehaviour
     }
     public void OnClickEditRotateZLeft()
     {
-        if (currentBlock != null) currentBlock.EditRotateYLeft();
+        if (currentBlock != null) currentBlock.EditRotateZLeft();
     }
     public void OnClickEditRotateZRight()
     {
-        if (currentBlock != null) currentBlock.EditRotateYRight();
+        if (currentBlock != null) currentBlock.EditRotateZRight();
     }
 }

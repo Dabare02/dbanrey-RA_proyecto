@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3992058418704951286}
   - component: {fileID: 4408371244265140508}
   - component: {fileID: 8546131851031711643}
+  - component: {fileID: 7986257386335391645}
   m_Layer: 0
   m_Name: LargeRectangleBlock
   m_TagString: Untagged
@@ -171,5 +172,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63bfd7722331b0b4bbee8368697d9945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fallSpeed: 0.5
+  defaultFallSpeed: 0.25
+  dropFallSpeed: 2
   moveDistance: 1
+  joystickMoveSpeed: 1
+  rotateDegrees: 22.5
+  physCollider: {fileID: 2036929080389590755}
+--- !u!114 &7986257386335391645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6788356951657474780}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0, g: 0.7328172, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
