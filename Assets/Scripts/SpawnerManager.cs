@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class SpawnerManager : MonoBehaviour
 {
+    //TODO: Funciones pasua/continuar para cuando se desenfoque el image target
+    //TODO: Añadir drop shadow a bloques
+
     [Header("Generación")]
     public GameObject[] blockPrefabs;  // Prefabs bloques
     public Transform spawnPoint;    // Punto spawneo bloques
@@ -40,7 +43,8 @@ public class SpawnerManager : MonoBehaviour
         // Elegimos un bloque aleatorio
         int randIndex = Random.Range(0, blockPrefabs.Length);
 
-        GameObject newBlock = Instantiate(blockPrefabs[randIndex], spawnPoint.position, Quaternion.identity);
+
+        GameObject newBlock = Instantiate(blockPrefabs[randIndex], spawnPoint.position, Quaternion.identity, transform);
         currentBlock = newBlock.GetComponent<BlockController>();
     }
     // Llamado desde block al tocarlo
