@@ -72,32 +72,16 @@ public class SpawnerManager : MonoBehaviour
             }
         }
     }
+    public void PauseGame()
+    {
+        Time.timeScale = 0f;
+    }
+    public void ResumeGame()
+    {
+        Time.timeScale = 1f;
+    }
 
     // --- FUNCIONES UI ---
-    // public void OnClickLeft()
-    // {
-    //     if (currentBlock != null) currentBlock.MoveLeft();
-    // }
-    // public void OnClickRight()
-    // {
-    //     if (currentBlock != null) currentBlock.MoveRight();
-    // }
-    // public void OnClickForward()
-    // {
-    //     if (currentBlock != null) currentBlock.MoveForward();
-    // }
-    // public void OnClickBackward()
-    // {
-    //     if (currentBlock != null) currentBlock.MoveBackward();
-    // }
-    public void OnClickRotateLeft()
-    {
-        if (currentBlock != null) currentBlock.RotateBlockLeft();
-    }
-    public void OnClickRotateRight()
-    {
-        if (currentBlock != null) currentBlock.RotateBlockRight();
-    }
     public void OnClickDropDown()
     {
         if (currentBlock != null) currentBlock.DropDown();
@@ -106,7 +90,15 @@ public class SpawnerManager : MonoBehaviour
     {
         if (currentBlock == null || !currentBlock.IsFalling) SpawnBlock();
     }
-    
+    public void OnClickRotateLeft()
+    {
+        if (currentBlock != null) currentBlock.RotateBlockLeft();
+    }
+    public void OnClickRotateRight()
+    {
+        if (currentBlock != null) currentBlock.RotateBlockRight();
+    }
+
     public void OnClickDoneEditing()
     {
         if (currentBlock != null)
@@ -119,5 +111,45 @@ public class SpawnerManager : MonoBehaviour
         normalUI.SetActive(true);
 
         FreezeAllLandedBlocks(false);
+    }
+    public void OnClickEditLeft()
+    {
+        if (currentBlock != null) currentBlock.EditMoveLeft();
+    }
+    public void OnClickEditRight()
+    {
+        if (currentBlock != null) currentBlock.EditMoveRight();
+    }
+    public void OnClickEditForward()
+    {
+        if (currentBlock != null) currentBlock.EditMoveForward();
+    }
+    public void OnClickEditBackward()
+    {
+        if (currentBlock != null) currentBlock.EditMoveBackward();
+    }
+    public void OnClickEditUp()
+    {
+        if (currentBlock != null) currentBlock.EditMoveUp();
+    }
+    public void OnClickEditDown()
+    {
+        if (currentBlock != null) currentBlock.EditMoveDown();
+    }
+    public void OnClickEditRotateXLeft()
+    {
+        if (currentBlock != null) currentBlock.EditRotateXLeft();
+    }
+    public void OnClickEditRotateXRight()
+    {
+        if (currentBlock != null) currentBlock.EditRotateXRight();
+    }
+    public void OnClickEditRotateZLeft()
+    {
+        if (currentBlock != null) currentBlock.EditRotateYLeft();
+    }
+    public void OnClickEditRotateZRight()
+    {
+        if (currentBlock != null) currentBlock.EditRotateYRight();
     }
 }
