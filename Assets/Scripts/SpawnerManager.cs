@@ -18,6 +18,10 @@ public class SpawnerManager : MonoBehaviour
     public float explosionForce = 700f;
     public float explosionRadius = 10f;
     public float explosionUpward = 3f;  // Modificador para que bloques salgan hacia arriba.
+    public AudioClip explosionSFX;
+    public GameObject explosionVFX;
+
+    private AudioSource _audioSource;
 
     private BlockController currentBlock;   // Bloque controlado actualmente
     private bool isEditing = false;   // Indica si estamos en modo edición
@@ -28,6 +32,11 @@ public class SpawnerManager : MonoBehaviour
         if (isEditing) return false;
 
         return currentBlock == null || !currentBlock.IsFalling;
+    }
+
+    void Start()
+    {
+        _audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -96,8 +105,19 @@ public class SpawnerManager : MonoBehaviour
         // Buscar los bloques que forman la estructura
         GameObject[] landBlocks = GameObject.FindGameObjectsWithTag("Landed");
 
-        // Colocar bomba invisible
+        // Determinar pos explosion
         Vector3 explosionCenter = spawnPoint.position + Vector3.down * 2.0f;
+
+        // Efectos
+        if (explosionSFX != null && _audioSource != null)
+        {
+            _audioSource.PlayOneShot(explosionSFX);
+        }
+        if (explosionVFX != null)
+        {
+            GameObject fx = Instantiate(explosionVFX, explosionCenter, Quaternion.identity);
+            Destroy(fx, 3.0f); // Destruye el efecto después de 3 segundos
+        }
 
         // Aplicar fisicas explosion
         foreach (GameObject b in landBlocks)
