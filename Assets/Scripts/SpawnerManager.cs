@@ -3,7 +3,6 @@ using UnityEngine;
 public class SpawnerManager : MonoBehaviour
 {
     //TODO: Funciones pasua/continuar para cuando se desenfoque el image target
-    //TODO: Arreglar bug de spawneo infinito
 
     [Header("Generación")]
     public GameObject[] blockPrefabs;  // Prefabs bloques
