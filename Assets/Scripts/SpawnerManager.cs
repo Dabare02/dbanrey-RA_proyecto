@@ -24,6 +24,11 @@ public class SpawnerManager : MonoBehaviour
     public AudioClip explosionSFX;
     public GameObject explosionVFX;
 
+    [Header("Indicador modo")]
+    public SpriteRenderer modeIndicRenderer;
+    public Color normalColor = new Color(Color.white.r, Color.white.g, Color.white.b, 0.5f);
+    public Color editColor = new Color(0f, 0.8f, 1f, 0.5f);
+
     private AudioSource _audioSource;
 
     private BlockController currentBlock;   // Bloque controlado actualmente
@@ -41,6 +46,8 @@ public class SpawnerManager : MonoBehaviour
     void Start()
     {
         _audioSource = GetComponent<AudioSource>();
+
+        if (modeIndicRenderer != null) modeIndicRenderer.color = normalColor;
     }
 
     void Update()
@@ -91,6 +98,8 @@ public class SpawnerManager : MonoBehaviour
         // Cambiar la interfaz
         normalUI.SetActive(false);
         editUI.SetActive(true);
+
+        if (modeIndicRenderer != null) modeIndicRenderer.color = editColor;
 
         FreezeAllLandedBlocks(true);
     }
@@ -200,6 +209,8 @@ public class SpawnerManager : MonoBehaviour
         // Restaruar la interfaz
         editUI.SetActive(false);
         normalUI.SetActive(true);
+
+        if (modeIndicRenderer != null) modeIndicRenderer.color = normalColor;
 
         FreezeAllLandedBlocks(false);
         isEditing = false;
