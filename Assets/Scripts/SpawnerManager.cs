@@ -13,6 +13,9 @@ public class SpawnerManager : MonoBehaviour
     public Joystick movementStick;
     public GameObject normalUI; // El panel normal (joystick y generar bloques)
     public GameObject editUI;   // El panel de edición (flechas, rotación, Done)
+    public GameObject editPreciseUI;    // Subpanel de edicion precisa
+    public GameObject editStickUI;   // Subpanel de edicion con joystick
+    public Joystick editStick;       // Joystick de edición
 
     [Header("Variables explosión")]
     public float explosionForce = 700f;
@@ -25,6 +28,7 @@ public class SpawnerManager : MonoBehaviour
 
     private BlockController currentBlock;   // Bloque controlado actualmente
     private bool isEditing = false;   // Indica si estamos en modo edición
+    private bool isEditStickActive = false; // Si se esta editando con joystick
 
     // Devuelve si se puede seleccionar un bloque
     public bool CanSelectBlock()
@@ -42,7 +46,7 @@ public class SpawnerManager : MonoBehaviour
     void Update()
     {
         // Si tenemos un bloque cayendo y controlable, leemos el joystick en cada frame
-        if (currentBlock != null && currentBlock.IsFalling && currentBlock.IsControllable)
+        if (currentBlock != null && currentBlock.IsFalling && currentBlock.IsControllable && movementStick != null)
         {
             float horizontal = movementStick.Horizontal;
             float vertical = movementStick.Vertical;
@@ -51,6 +55,18 @@ public class SpawnerManager : MonoBehaviour
             if (horizontal != 0 || vertical != 0)
             {
                 currentBlock.MoveConJoystick(horizontal, vertical);
+            }
+        }
+
+        // Si el joystick esta activo en modo edicion
+        if (currentBlock != null && isEditing && isEditStickActive && editStick != null)
+        {
+            float horizontal = editStick.Horizontal;
+            float vertical = editStick.Vertical;
+
+            if (horizontal != 0 || vertical != 0)
+            {
+                currentBlock.EditMoveWJoystick(horizontal, vertical);
             }
         }
     }
@@ -67,6 +83,7 @@ public class SpawnerManager : MonoBehaviour
     public void StartEditingBlock(BlockController blockToEdit)
     {
         isEditing = true;
+        isEditStickActive = false;
 
         currentBlock = blockToEdit;
         currentBlock.EnableEditMode();
@@ -231,5 +248,11 @@ public class SpawnerManager : MonoBehaviour
     public void OnClickReset()
     {
         StartCoroutine(ExplodeResetRoutine());
+    }
+    public void OnClickToggleEditControls()
+    {
+        isEditStickActive = !isEditStickActive;
+        if (editPreciseUI != null) editPreciseUI.SetActive(!isEditStickActive);
+        if (editStickUI != null) editStickUI.SetActive(isEditStickActive);
     }
 }
