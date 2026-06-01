@@ -68,6 +68,7 @@ public class BlockController : MonoBehaviour
         // Frenar en seco la inercia acumulada
         _rb.linearVelocity = Vector3.zero;
         _rb.angularVelocity = Vector3.zero;
+        _rb.collisionDetectionMode = CollisionDetectionMode.Discrete;   // Para evitar deslizes entre bloques
         _rb.useGravity = true; // Habilitar gravedad para que el bloque pueda caer normalmente
     }
 

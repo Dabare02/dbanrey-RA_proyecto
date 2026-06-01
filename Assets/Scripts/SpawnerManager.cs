@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class SpawnerManager : MonoBehaviour
@@ -13,6 +14,15 @@ public class SpawnerManager : MonoBehaviour
     public GameObject normalUI; // El panel normal (joystick y generar bloques)
     public GameObject editUI;   // El panel de edición (flechas, rotación, Done)
 
+    [Header("Variables explosión")]
+    public float explosionForce = 700f;
+    public float explosionRadius = 10f;
+    public float explosionUpward = 3f;  // Modificador para que bloques salgan hacia arriba.
+    public AudioClip explosionSFX;
+    public GameObject explosionVFX;
+
+    private AudioSource _audioSource;
+
     private BlockController currentBlock;   // Bloque controlado actualmente
     private bool isEditing = false;   // Indica si estamos en modo edición
 
@@ -22,6 +32,11 @@ public class SpawnerManager : MonoBehaviour
         if (isEditing) return false;
 
         return currentBlock == null || !currentBlock.IsFalling;
+    }
+
+    void Start()
+    {
+        _audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -82,6 +97,60 @@ public class SpawnerManager : MonoBehaviour
     public void ResumeGame()
     {
         Time.timeScale = 1f;
+    }
+
+    // --- FUNCIONES EXPLOSION ---
+    private IEnumerator ExplodeResetRoutine()
+    {
+        // Buscar los bloques que forman la estructura
+        GameObject[] landBlocks = GameObject.FindGameObjectsWithTag("Landed");
+
+        // Determinar pos explosion
+        Vector3 explosionCenter = spawnPoint.position + Vector3.down * 2.0f;
+
+        // Efectos
+        if (explosionSFX != null && _audioSource != null)
+        {
+            _audioSource.PlayOneShot(explosionSFX);
+        }
+        if (explosionVFX != null)
+        {
+            GameObject fx = Instantiate(explosionVFX, explosionCenter, Quaternion.identity);
+            Destroy(fx, 3.0f); // Destruye el efecto después de 3 segundos
+        }
+
+        // Aplicar fisicas explosion
+        foreach (GameObject b in landBlocks)
+        {
+            Rigidbody rb = b.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.isKinematic = false; // Por si estan freeze
+                rb.AddExplosionForce(explosionForce, explosionCenter, explosionRadius, explosionUpward);
+                rb.AddTorque(Random.insideUnitSphere * 10f, ForceMode.Impulse);
+            }
+        }
+
+        // Eliminar inmediatamente bloque cayendo/editado
+        if (currentBlock != null && !currentBlock.CompareTag("Landed"))
+        {
+            Destroy(currentBlock.gameObject);
+            currentBlock = null;
+        }
+
+        // Pausar un tiempo
+        yield return new WaitForSeconds(3.5f);
+
+        // Eliminar el resto de bloques.
+        foreach (GameObject b in landBlocks)
+        {
+            if (b != null)
+            {
+                Destroy(b);
+            }
+        }
+        
+        isEditing = false;
     }
 
     // --- FUNCIONES UI ---
@@ -157,5 +226,10 @@ public class SpawnerManager : MonoBehaviour
     public void OnClickEditRotateZRight()
     {
         if (currentBlock != null) currentBlock.EditRotateZRight();
+    }
+
+    public void OnClickReset()
+    {
+        StartCoroutine(ExplodeResetRoutine());
     }
 }
