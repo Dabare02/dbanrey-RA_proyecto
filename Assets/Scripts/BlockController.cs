@@ -130,6 +130,14 @@ public class BlockController : MonoBehaviour
     public void EditRotateXRight() { if (isControllable) transform.Rotate(rotateDegrees, 0, 0); }
     public void EditRotateZLeft() { if (isControllable) transform.Rotate(0, 0, -rotateDegrees); }
     public void EditRotateZRight() { if (isControllable) transform.Rotate(0, 0, rotateDegrees); }
+    public void EditMoveWJoystick(float horizontal, float vertical)
+    {
+        if (isControllable)
+        {
+            Vector3 direction = new Vector3(horizontal, 0, vertical);
+            transform.Translate(direction * joystickMoveSpeed * Time.deltaTime, Space.World); 
+        }
+    }
 
     // --- FUNCIONES ESTADO EDICIÓN ---
     public void EnableEditMode()
