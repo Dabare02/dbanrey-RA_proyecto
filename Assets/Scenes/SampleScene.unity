@@ -9386,11 +9386,11 @@ MonoBehaviour:
   RuntimeCollider: 0
   mTrackableName: figuras
   mInitializedInEditor: 1
-  mDataSetPath: Vuforia/clase.xml
+  mDataSetPath: Vuforia/dbanrey-agm_ra_26.xml
   mAspectRatio: 1
   mImageTargetType: 0
-  mWidth: 1.5
-  mHeight: 1.5
+  mWidth: 2
+  mHeight: 2
   mRuntimeTexture: {fileID: 0}
   mMotionHint: 1
   mTrackingOptimization: 0
@@ -9429,7 +9429,7 @@ MonoBehaviour:
   mObserverBehaviour: {fileID: 1987154037}
   mHiddenRoot: {fileID: 0}
   mTargetName: figuras
-  mDatasetName: Vuforia/clase.xml
+  mDatasetName: Vuforia/dbanrey-agm_ra_26.xml
   mCastedBehaviour: {fileID: 1987154037}
   mMeshFilter: {fileID: 0}
   mMeshRenderer: {fileID: 0}
