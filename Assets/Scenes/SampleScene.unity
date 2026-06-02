@@ -9384,7 +9384,7 @@ MonoBehaviour:
   PreviewVisible: 1
   RuntimeOcclusion: 0
   RuntimeCollider: 0
-  mTrackableName: figuras
+  mTrackableName: puzzle-scattered-pieces
   mInitializedInEditor: 1
   mDataSetPath: Vuforia/dbanrey-agm_ra_26.xml
   mAspectRatio: 1
@@ -9428,7 +9428,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mObserverBehaviour: {fileID: 1987154037}
   mHiddenRoot: {fileID: 0}
-  mTargetName: figuras
+  mTargetName: puzzle-scattered-pieces
   mDatasetName: Vuforia/dbanrey-agm_ra_26.xml
   mCastedBehaviour: {fileID: 1987154037}
   mMeshFilter: {fileID: 0}

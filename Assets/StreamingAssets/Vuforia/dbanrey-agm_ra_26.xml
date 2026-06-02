@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig>
   <Tracking>
+    <ImageTarget name="city-playmat" size="2.000000 2.000000" />
+    <ImageTarget name="puzzle-scattered-pieces" size="2.000000 2.000000" />
+    <ImageTarget name="grunge-construction" size="2.000000 2.000000" />
     <ImageTarget name="piedra-del-sol" size="2.000000 2.000000" />
-    <ImageTarget name="figuras" size="2.000000 2.000000" />
   </Tracking>
 </QCARConfig>
