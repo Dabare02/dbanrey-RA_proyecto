@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig>
   <Tracking>
+    <ImageTarget name="melsi-mosaic" size="2.000000 2.000000" />
+    <ImageTarget name="stocksnap-tiles-shapes" size="2.000000 2.000000" />
+    <ImageTarget name="pexels-pieces" size="2.000000 2.000000" />
     <ImageTarget name="city-playmat" size="2.000000 2.000000" />
     <ImageTarget name="puzzle-scattered-pieces" size="2.000000 2.000000" />
     <ImageTarget name="grunge-construction" size="2.000000 2.000000" />
